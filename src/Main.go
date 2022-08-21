@@ -3,8 +3,8 @@ package src
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
-	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -112,6 +112,12 @@ func main() {
 	//Init Router
 	router := mux.NewRouter()
 
+	//CORS handler
+	headers := handlers.AllowedHeaders([]string{"X-Requested-with", "content-Type", "Authorization"})
+	methods := handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE"})
+	origins := handlers.AllowedOrigins([]string{"*"})
+	router.HandleFunc("/", RootEndpoint).Methods("GET")
+
 	//our data
 	then, _ := time.Parse("2 Jan 06 03:04PM", "28 Jul 22 11:59PM")
 	item1 := Item{"Study English", []string{"Listening", "Reading", "Writing", "Speaking"}}
@@ -129,5 +135,5 @@ func main() {
 	router.HandleFunc("/api/todo/{id}", deleteTodo).Methods("DELETE")
 
 	//start server
-	log.Fatal(http.ListenAndServe(":8000", router))
+	http.ListenAndServe(":8000", handlers.CORS(headers, methods, origins)(router))
 }
