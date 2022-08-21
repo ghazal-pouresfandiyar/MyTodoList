@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 type Status int
@@ -110,6 +111,15 @@ func RootEndpoint(response http.ResponseWriter, request *http.Request) {
 func main() {
 	//Init Router
 	router := mux.NewRouter()
+
+	//our data
+	then, _ := time.Parse("2 Jan 06 03:04PM", "28 Jul 22 11:59PM")
+	item1 := Item{"Study English", []string{"Listening", "Reading", "Writing", "Speaking"}}
+	todos = append(todos, makeTodoObj("1", item1, Done, then.Format(time.UnixDate), 5))
+	item2 := Item{"Programming", []string{"Syntax", "Installing", "Coding"}}
+	todos = append(todos, makeTodoObj("2", item2, Doing, then.Add(time.Hour*24).Format(time.UnixDate), 2))
+	item3 := Item{"Cooking", []string{}}
+	todos = append(todos, makeTodoObj("3", item3, Undone, then.Add(time.Hour*48).Format(time.UnixDate), 0))
 
 	//Route Handlers / Endpoints
 	router.HandleFunc("/api/todo", getTodos).Methods("GET")
