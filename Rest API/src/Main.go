@@ -25,6 +25,7 @@ type Todo struct {
 	Status       string `json:"status"`
 	DueDate      string `json:"due_date"`
 	DurationTime int    `json:"duration_time"`
+	ShowItem     bool   `json:"show_item"`
 }
 
 func makeTodoObj(ID string, Item Item, Status Status, DueDate string, DurationTime int) Todo {
@@ -39,7 +40,7 @@ func makeTodoObj(ID string, Item Item, Status Status, DueDate string, DurationTi
 	default:
 		str = "Undefined"
 	}
-	return Todo{ID, Item, str, DueDate, DurationTime}
+	return Todo{ID, Item, str, DueDate, DurationTime, false}
 }
 
 type Item struct {
