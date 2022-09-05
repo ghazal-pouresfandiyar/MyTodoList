@@ -13,18 +13,22 @@ case $1 in
 			-p | --priority)
 				if [ -z $5 ]; then
 					priority="L"
+					wrong=false
 				elif [ $5 == 'M' ] || [ $5 == 'L' ] || [ $5 == 'H' ]; then
 					priority=$5
+					wrong=false
 				else
 					echo "Option -p|--priority Only Accept L|M|H"
+					wrong=true
 				fi
 			;;
 			*)
 				priority="L"
+				wrong=false
 			;;
 		esac
-		if !([ -z $2 ]); then
-			echo "0,$priority,$3" >>  tasks.csv
+		if !([ -z $2 ]) && !($wrong); then
+			echo "0,$priority,\"$3\"" >>  tasks.csv
 		fi
 	;;
 esac
