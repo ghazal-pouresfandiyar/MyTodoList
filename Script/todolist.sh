@@ -27,4 +27,13 @@ case $1 in
 		esac
 		echo "0,$priority,\"$3\"" >>  tasks.csv
 	;;
+	clear)
+		> tasks.csv
+	;;
+	list)
+		cat tasks.csv | awk -F"," '{print NR " | " $1 " | " $2 " | " $3}'
+	;;
+	*)
+		echo Command Not Supported!
+	;;
 esac
