@@ -33,6 +33,12 @@ case $1 in
 	list)
 		cat tasks.csv | awk -F"," '{print NR " | " $1 " | " $2 " | " $3}'
 	;;
+	find)
+		cat tasks.csv | grep $2 tasks.csv | awk -F"," '{print NR " | " $1 " | " $2 " | " $3}'
+	;;
+	done)
+		sed -i -e "$2""s/0/1/" tasks.csv
+	;;
 	*)
 		echo Command Not Supported!
 	;;
