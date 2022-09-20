@@ -34,7 +34,7 @@ case $1 in
 		cat tasks.csv | awk -F"," '{print NR " | " $1 " | " $2 " | " $3}'
 	;;
 	find)
-		cat tasks.csv | grep $2 tasks.csv | awk -F"," '{print NR " | " $1 " | " $2 " | " $3}'
+		cat tasks.csv | awk -F"," '{print NR " | " $1 " | " $2 " | " $3}' | grep "$2"
 	;;
 	done)
 		sed -i -e "$2""s/0/1/" tasks.csv
